@@ -3,14 +3,16 @@ using Class13Demo.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Class13Demo.Migrations
 {
     [DbContext(typeof(EnrollmentDbContext))]
-    partial class EnrollmentDbContextModelSnapshot : ModelSnapshot
+    [Migration("20181024231906_addedRemainderTables")]
+    partial class addedRemainderTables
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -42,8 +44,6 @@ namespace Class13Demo.Migrations
                     b.Property<int>("StudentID");
 
                     b.HasKey("CourseID", "StudentID");
-
-                    b.HasIndex("StudentID");
 
                     b.ToTable("CourseEnrollments");
                 });
@@ -81,37 +81,7 @@ namespace Class13Demo.Migrations
 
                     b.HasKey("ID");
 
-                    b.HasIndex("CourseID");
-
-                    b.HasIndex("StudentID");
-
                     b.ToTable("Transcripts");
-                });
-
-            modelBuilder.Entity("Class13Demo.Models.CourseEnrollments", b =>
-                {
-                    b.HasOne("Class13Demo.Models.Course", "Course")
-                        .WithMany("Enrollments")
-                        .HasForeignKey("CourseID")
-                        .OnDelete(DeleteBehavior.Cascade);
-
-                    b.HasOne("Class13Demo.Models.Student", "Student")
-                        .WithMany("Courses")
-                        .HasForeignKey("StudentID")
-                        .OnDelete(DeleteBehavior.Cascade);
-                });
-
-            modelBuilder.Entity("Class13Demo.Models.Transcript", b =>
-                {
-                    b.HasOne("Class13Demo.Models.Course", "Course")
-                        .WithMany("Transcripts")
-                        .HasForeignKey("CourseID")
-                        .OnDelete(DeleteBehavior.Cascade);
-
-                    b.HasOne("Class13Demo.Models.Student", "Student")
-                        .WithMany("Transcripts")
-                        .HasForeignKey("StudentID")
-                        .OnDelete(DeleteBehavior.Cascade);
                 });
 #pragma warning restore 612, 618
         }
